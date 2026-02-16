@@ -1,0 +1,91 @@
+import { Download, Eye } from "lucide-react";
+import { motion } from "framer-motion";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/button";
+import {Link} from "react-router-dom";
+ 
+const resumeLink = "/resume/LanAnh_Frontend_CV.pdf";
+const resumeFilename = "LanAnh_Frontend_CV.pdf";
+
+
+export default function ResumeSection() {
+  const paragraphVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: 0.1 }
+    },
+  };
+
+  const buttonsContainerVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, delay: 0.2 }
+    },
+  };
+
+  return (
+    <section
+      id="resume"
+      className="py-24 sm:py-32 relative bg-gray-950 text-white text-center overflow-hidden"
+    > 
+
+      <div className="container relative z-10 mx-auto px-4">
+        <SectionHeading title="Resume" subtitle="My Professional Background" />
+
+        <motion.p
+          variants={ paragraphVariants }
+          initial="hidden"
+          whileInView="visible"
+          viewport={ { once: true, amount: 0.5 } }
+          className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto mt-10"
+        >
+          Take a look at my professional experience and skills. You can view it directly in your browser or download a PDF copy for your convenience.
+        </motion.p>
+
+        <motion.div
+          variants={ buttonsContainerVariants }
+          initial="hidden"
+          whileInView="visible"
+          viewport={ { once: true, amount: 0.5 } }
+          className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6"
+        >
+          <Button
+            asChild
+            size="lg"
+            className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-lg px-6 py-3 text-center"
+          >
+            <Link
+              to={ resumeLink }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center"
+            >
+              <Eye size={ 50 } className="mr-2" />
+              View Online
+            </Link>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="bg-gray-700/80 border-gray-400 text-gray-200 hover:text-white hover:bg-gray-800/50 focus:ring-4 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-lg px-6 py-3 text-center"
+          >
+            <Link
+              href={ resumeLink }
+              download={ resumeFilename }
+              className="inline-flex items-center justify-center"
+            >
+              <Download size={ 20 } className="mr-2" />
+              Download CV (.pdf)
+            </Link>
+          </Button>
+        </motion.div>
+      </div>
+ 
+    </section>
+  );
+}
