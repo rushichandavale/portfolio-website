@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Mail, MapPin, Award, Code } from "lucide-react";
 import { Images } from "@/lib/images";
+import TiltedCard from "@/components/ui/TiltedCard";
 
  
 const stats = [
@@ -32,23 +33,31 @@ const AboutMeSection = () => {
             {/* Glow effect */}
             <div className="absolute -inset-3 bg-gradient-to-br from-primary/30 via-secondary/20 to-purple-600/30 rounded-3xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
             
-            {/* Photo Container - Reduced height */}
-            <div className="relative aspect-[4/5] max-h-[600px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
-              <img
-                src={Images.profile}
-                alt="Profile"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent opacity-60" />
-              
-              {/* Floating badge - More compact */}
-              <div className="absolute bottom-4 left-4 right-4 bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-lg p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-xs font-semibold text-white">Available for Work</span>
-                </div>
-                <p className="text-xs text-slate-400">Open to opportunities</p>
-              </div>
+            {/* Photo Container - Tilted Card Effect */}
+            <div className="relative flex items-center justify-center">
+               <TiltedCard
+                  imageSrc={Images.profile}
+                  altText="Rushikesh Chandavale"
+                  captionText="Software Engineer"
+                  containerHeight="500px"
+                  containerWidth="100%"
+                  imageHeight="500px"
+                  imageWidth="100%" // Ensure it fits container
+                  rotateAmplitude={10}
+                  scaleOnHover={1.05}
+                  showMobileWarning={false}
+                  showTooltip={true}
+                  displayOverlayContent={true}
+                  // overlayContent={
+                  //   <div className="absolute bottom-4 left-4 right-4 bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-lg p-3 z-10">
+                  //     <div className="flex items-center gap-2 mb-1">
+                  //       <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  //       <span className="text-xs font-semibold text-white">Available for Work</span>
+                  //     </div>
+                  //     <p className="text-xs text-slate-400">Open to opportunities</p>
+                  //   </div>
+                  // }
+               />
             </div>
           </motion.div>
 
@@ -103,8 +112,8 @@ const AboutMeSection = () => {
               <div className="space-y-2">
                 <div className="flex items-center gap-3 text-slate-300 hover:text-white transition-colors group">
                   <Mail className="w-4 h-4 text-primary" />
-                  <a href="mailto:rushi@gmail.com" className="text-sm group-hover:underline">
-                    rushi@gmail.com
+                  <a href="mailto:rushichandavale@gmail.com" className="text-sm group-hover:underline">
+                    rushichandavale@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center gap-3 text-slate-300">

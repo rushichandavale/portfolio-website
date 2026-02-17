@@ -1,5 +1,4 @@
-"use client";
-
+// ... imports
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
  
@@ -27,8 +26,9 @@ import {
   SiMariadb,
   SiMysql
 } from "react-icons/si";
-
-
+import TagCloud from "@/components/ui/TagCloud";
+ 
+// ... inside component
 const skillCategories = [
   {
     title: "Frontend Development",
@@ -67,7 +67,6 @@ const skillCategories = [
   }
 ];
 
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -78,7 +77,6 @@ const containerVariants = {
     },
   },
 };
-
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -91,52 +89,64 @@ const itemVariants = {
   },
 };
 
-
 export default function SkillsSection() {
+  const allSkills = skillCategories.flatMap(cat => cat.skills);
+
   return (
-    <section id="skills" className="py-24 sm:py-32 relative bg-gray-950 overflow-hidden">
+    <section id="skills" className="py-24 sm:py-32 relative bg-gray-950 overflow-hidden min-h-screen flex flex-col justify-center">
        
       <div className="container relative z-10 mx-auto px-4">
         <SectionHeading title="My Skills" subtitle="Technologies & Expertise" />
 
-        <motion.div
-          variants={ containerVariants }
-          initial="hidden"
-          whileInView="visible"
-          viewport={ { once: true, amount: 0.1 } }
-          className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {
-            skillCategories.map((category) => (
+        <div className="mt-16 flex flex-col lg:flex-row items-center justify-between gap-12">
+          {/* Leftside: 3D Cloud */}
+          <div className="w-full lg:w-1/2 flex items-center justify-center order-2 lg:order-1 perspective-1000">
+             <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+                <TagCloud 
+                  className="text-slate-300 pointer-events-none"
+                  radius={180} // adjusted radius
+                >
+                  {allSkills.map((skill, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1 bg-slate-900/80 backdrop-blur-sm p-2 rounded-lg border border-slate-700/50 shadow-lg">
+                       <div className="w-8 h-8 flex items-center justify-center">{skill.icon}</div>
+                       <span className="text-[10px] font-semibold">{skill.name}</span>
+                    </div>
+                  ))}
+                </TagCloud>
+             </div>
+          </div>
+
+          {/* Rightside: Categories Grid (Compact) */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="w-full lg:w-1/2 grid grid-cols-1 gap-6 order-1 lg:order-2"
+          >
+             {skillCategories.map((category) => (
               <motion.div
-                key={ category.title }
-                variants={ itemVariants }
-                className="group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-slate-900"
+                key={category.title}
+                variants={itemVariants}
+                className="group relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/50 p-5 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:bg-slate-900"
               >
-                <h3 className="mb-6 text-xl font-bold text-slate-100 text-center">
-                  { category.title }
+                <h3 className="mb-4 text-lg font-bold text-slate-100 border-b border-slate-800 pb-2">
+                  {category.title}
                 </h3>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3">
-                  {
-                    category.skills.map((skill) => (
-                      <div key={ skill.name } className="flex flex-col items-center justify-center gap-2 text-center">
-                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-800/70 transition-colors duration-300 group-hover:bg-slate-700/80">
-                          { skill.icon }
-                        </div>
-                        <p className="text-sm font-medium text-slate-300">
-                          { skill.name }
-                        </p>
-                      </div>
-                    ))
-                  }
+                <div className="flex flex-wrap gap-3">
+                  {category.skills.map((skill) => (
+                    <div key={skill.name} className="flex items-center gap-2 bg-slate-800/50 rounded-full px-3 py-1.5 text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700 transition-colors">
+                      {/* Enforce small icon size in pills using [&>svg]:!w-full [&>svg]:!h-full */}
+                      <div className="w-4 h-4 shrink-0 [&>svg]:!w-full [&>svg]:!h-full">{skill.icon}</div>
+                      <span>{skill.name}</span>
+                    </div>
+                  ))}
                 </div>
               </motion.div>
-            ))
-          }
-        </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
-
-      
     </section>
   );
 }

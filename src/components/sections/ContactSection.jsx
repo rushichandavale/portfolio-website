@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react";
 import { Images } from "@/lib/images";
+import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
 
 const socialLinks = [
   {
@@ -44,6 +45,7 @@ const socialLinks = [
 export default function ContactSection() {
   return (
     <section id="contact" className="py-24 sm:py-32 relative bg-gray-950 text-white overflow-hidden">
+      <BackgroundBeams className="z-0" />
       <div className="container relative z-10 mx-auto px-4">
         <SectionHeading title="Get In Touch" subtitle="Let's build something amazing together" />
 

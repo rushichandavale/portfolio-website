@@ -5,7 +5,51 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Github, Linkedin, Mail, Code2, Terminal, Cpu, Globe } from "lucide-react";
 import { SparklesCore } from "../ui/sparkles";
 
+const TypewriterEffect = ({ texts, delay = 100, pause = 2000 }) => {
+  const [currentText, setCurrentText] = React.useState("");
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [textIndex, setTextIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const currentString = texts[textIndex];
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (currentIndex < currentString.length) {
+          setCurrentText(prev => prev + currentString[currentIndex]);
+          setCurrentIndex(prev => prev + 1);
+        } else {
+          setTimeout(() => setIsDeleting(true), pause);
+        }
+      } else {
+        if (currentIndex > 0) {
+          setCurrentText(prev => prev.slice(0, -1));
+          setCurrentIndex(prev => prev - 1);
+        } else {
+          setIsDeleting(false);
+          setTextIndex(prev => (prev + 1) % texts.length);
+        }
+      }
+    }, isDeleting ? delay / 2 : delay);
+
+    return () => clearTimeout(timeout);
+  }, [currentIndex, delay, isDeleting, pause, textIndex, texts]);
+
+  return <span>{currentText}<span className="animate-pulse">|</span></span>;
+}
+
 const HeroSection = () => {
+    const [scrollY, setScrollY] = React.useState(0);
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
   const codeSnippet = `const developer = {
   name: "Rushikesh",
   role: "Software Engineer",
@@ -83,7 +127,7 @@ const HeroSection = () => {
                 transition={{ delay: 0.4 }}
                 className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
               >
-                Hi, I'm <strong className="text-white">Rushikesh</strong>. A Software Engineer focused on crafting clean, user-centric web applications with modern technologies.
+                Hi, I'm <strong className="text-white">Rushikesh</strong>. A <strong className="text-primary"><TypewriterEffect texts={["Software Engineer", "Frontend Developer", "Full Stack Developer"]} delay={100} /></strong> focused on crafting clean, user-centric web applications with modern technologies.
               </motion.p>
             </div>
 
@@ -232,8 +276,8 @@ const HeroSection = () => {
       </div>
        <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        animate={{ opacity: scrollY > 100 ? 0 : 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
         <motion.div
