@@ -3,7 +3,9 @@
 import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Mail, MapPin, Award, Code } from "lucide-react";
+import { Images } from "@/lib/images";
 
+ 
 const stats = [
   { label: "Years of Experience", value: "3+", icon: Award },
   { label: "Projects Completed", value: "15+", icon: Code },
@@ -33,7 +35,7 @@ const AboutMeSection = () => {
             {/* Photo Container - Reduced height */}
             <div className="relative aspect-[4/5] max-h-[600px] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop"
+                src={Images.profile}
                 alt="Profile"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

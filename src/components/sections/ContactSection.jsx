@@ -12,6 +12,7 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import { Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react";
+import { Images } from "@/lib/images";
 
 const socialLinks = [
   {
@@ -61,14 +62,14 @@ export default function ContactSection() {
                 <div className="absolute -inset-2 bg-gradient-to-br from-primary via-secondary to-purple-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
                 <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+                    src={Images.profile}
                     alt="Profile"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-2">Rushi</h3>
+              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-2">Rushikesh Chandavale</h3>
               <p className="text-lg text-slate-400 mb-6">Software Engineer & Web Developer</p>
 
               {/* Contact Info */}

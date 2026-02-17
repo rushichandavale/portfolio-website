@@ -52,10 +52,13 @@ import ProfilePlaceholder from "/images/avatars/default-avatar.png";
 import ProjectPlaceholder from "/images/avatars/default-avatar.png";
 import DefaultAvatar from "/images/avatars/default-avatar.png";
 
+import profile from "/images/profile.png"
+
 
 // --- Export Object ---
 export const Images  = {
   // Bookstore Project
+  profile,
   BookstoreThumbnail,
   BookstoreHomepage1,
   BookstoreHomepage2,
