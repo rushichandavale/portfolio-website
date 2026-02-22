@@ -5,42 +5,11 @@ import { Link } from "react-router-dom";
 import ContactForm from "@/components/ui/ContactForm";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { motion } from "framer-motion";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaTwitter,
-  FaInstagram,
-} from "react-icons/fa";
-import { Github, Linkedin, Mail, MapPin, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Twitter, Instagram } from "lucide-react";
 import { Images } from "@/lib/images";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
+import { socialLinks } from "@/lib/data";
 
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/in/rushikesh-chandavale/",
-    icon: FaLinkedin,
-    color: "hover:bg-blue-600",
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/rushichandavale",
-    icon: FaGithub,
-    color: "hover:bg-gray-700",
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/rushichandavale",
-    icon: FaTwitter,
-    color: "hover:bg-sky-500",
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/rushichandavale",
-    icon: FaInstagram,
-    color: "hover:bg-pink-600",
-  },
-];
 
 export default function ContactSection() {
   return (
@@ -100,30 +69,29 @@ export default function ContactSection() {
               </div>
 
               <div className="flex gap-4 pt-4">
-                <a
-                  href="https://github.com/rushichandavale"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all transform hover:scale-110"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://linkedin.com/in/rushikesh-chandavale/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all transform hover:scale-110"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://twitter.com/rushichandavale"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all transform hover:scale-110"
-                >
-                  <Twitter className="h-5 w-5" />
-                </a>
+                {socialLinks.filter(s => s.platform !== 'mail').map((social, idx) => {
+                  const Icon = {
+                    github: Github,
+                    linkedin: Linkedin,
+                    twitter: Twitter,
+                    instagram: Instagram
+                  }[social.platform];
+
+                  if (!Icon) return null;
+
+                  return (
+                    <a
+                      key={idx}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all transform hover:scale-110"
+                      title={social.name}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  );
+                })}
               </div>
             </div>
             </div>

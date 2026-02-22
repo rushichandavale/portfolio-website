@@ -2,9 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, Github, Linkedin, Mail, Code2, Terminal, Cpu, Globe } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail, Code2, Terminal, Cpu, Globe, Twitter, Instagram } from "lucide-react";
 import { SparklesCore } from "../ui/sparkles";
-
+import {socialLinks} from "@/lib/data"
 const TypewriterEffect = ({ texts, delay = 100, pause = 2000 }) => {
   const [currentText, setCurrentText] = React.useState("");
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -39,6 +39,51 @@ const TypewriterEffect = ({ texts, delay = 100, pause = 2000 }) => {
   return <span>{currentText}<span className="animate-pulse">|</span></span>;
 }
 
+const TypewriterCode = ({ code, speed = 30 }) => {
+  const [displayCode, setDisplayCode] = React.useState("");
+  const [cursorPosition, setCursorPosition] = React.useState(0);
+
+  React.useEffect(() => {
+    if (cursorPosition < code.length) {
+      const timeout = setTimeout(() => {
+        setDisplayCode(prev => prev + code[cursorPosition]);
+        setCursorPosition(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [code, cursorPosition, speed]);
+
+  const highlightCode = (text) => {
+    // Simple regex-based syntax highlighting for the specific snippet
+    return text.split(/(\s+|[{}[\](),.:;]|["](?:\\.|[^"\\])*["]|\b(?:const|var|let|function|return|true|false)\b)/g).map((part, i) => {
+      if (!part) return null;
+      if (/^(const|function|return)$/.test(part)) return <span key={i} className="text-purple-400">{part}</span>;
+      if (/^(true|false)$/.test(part)) return <span key={i} className="text-red-400">{part}</span>;
+      if (/^[{}()[\]]$/.test(part)) return <span key={i} className="text-yellow-400">{part}</span>;
+      if (/^[.:;,]$/.test(part)) return <span key={i} className="text-slate-400">{part}</span>;
+      if (/^"[^"]*"$/.test(part)) return <span key={i} className="text-green-400">{part}</span>;
+      if (/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(part) && !/^(const|function|return|true|false)$/.test(part)) {
+        // Basic check for property names (roughly)
+        const nextPart = text.split(/(\s+|[{}[\](),.:;]|["](?:\\.|[^"\\])*["]|\b(?:const|var|let|function|return|true|false)\b)/g)[i+1];
+        if (nextPart === ':') return <span key={i} className="text-sky-400">{part}</span>;
+        return <span key={i} className="text-blue-400">{part}</span>;
+      }
+      return <span key={i} className="text-slate-300">{part}</span>;
+    });
+  };
+
+  return (
+    <div className="font-mono text-sm leading-relaxed whitespace-pre-wrap">
+      {highlightCode(displayCode)}
+      <motion.div 
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.8, repeat: Infinity }}
+        className="w-2 h-4 bg-primary inline-block ml-0.5 align-middle"
+      />
+    </div>
+  );
+};
+
 const HeroSection = () => {
     const [scrollY, setScrollY] = React.useState(0);
 
@@ -51,9 +96,9 @@ const HeroSection = () => {
     }, []);
 
   const codeSnippet = `const developer = {
-  name: "Rushikesh",
+  name: "Rushikesh Chandavale",
   role: "Software Engineer",
-  skills: ["React", "Next.js", "Node.js"],
+  skills: ["React", "Next.js", "Javascript", "Typescript", "Node.js"],
   hardWorker: true,
   quickLearner: true,
   hireable: function() {
@@ -127,7 +172,7 @@ const HeroSection = () => {
                 transition={{ delay: 0.4 }}
                 className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
               >
-                Hi, I'm <strong className="text-white">Rushikesh</strong>. A <strong className="text-primary"><TypewriterEffect texts={["Software Engineer", "Frontend Developer", "Full Stack Developer"]} delay={100} /></strong> focused on crafting clean, user-centric web applications with modern technologies.
+                Hi, I'm <strong className="text-white">Rushikesh</strong>. A <strong className="text-primary"><TypewriterEffect texts={["Software Engineer", "Frontend Developer"]} delay={100} /></strong> focused on crafting clean, user-centric web applications with modern technologies.
               </motion.p>
             </div>
 
@@ -151,7 +196,7 @@ const HeroSection = () => {
               </Button>
               <Button
                 variant="outline"
-                className="bg-transparent text-white border-slate-700 hover:bg-slate-800 hover:border-slate-600 font-semibold rounded-xl px-8 py-6 text-base transition-all duration-300"
+                className="bg-transparent text-white border-slate-700 hover:bg-slate-800 hover:border-slate-600 hover:text-primary font-semibold rounded-xl px-8 py-6 text-base transition-all duration-300"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
@@ -168,21 +213,30 @@ const HeroSection = () => {
               transition={{ delay: 0.6 }}
               className="pt-4 flex items-center justify-center lg:justify-start gap-6"
             >
-              {[
-                { icon: Github, href: "https://github.com/rushichandavale" },
-                { icon: Linkedin, href: "https://linkedin.com/in/rushikesh-chandavale/" },
-                { icon: Mail, href: "mailto:rushichandavale@gmail.com" }
-              ].map((social, idx) => (
-                <a
-                  key={idx}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-white transition-colors transform hover:scale-110"
-                >
-                  <social.icon className="w-6 h-6" />
-                </a>
-              ))}
+              {socialLinks.map((social, idx) => {
+                const Icon = {
+                  github: Github,
+                  linkedin: Linkedin,
+                  twitter: Twitter,
+                  instagram: Instagram,
+                  mail: Mail
+                }[social.platform];
+
+                if (!Icon) return null;
+
+                return (
+                  <a
+                    key={idx}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-400 hover:text-white transition-colors transform hover:scale-110"
+                    title={social.name}
+                  >
+                    <Icon className="w-6 h-6" />
+                  </a>
+                );
+              })}
             </motion.div>
           </motion.div>
 
@@ -216,34 +270,8 @@ const HeroSection = () => {
               </div>
 
               {/* Card Body */}
-              <div className="p-6 font-mono text-sm leading-relaxed overflow-hidden">
-                <div className="text-slate-300">
-                  <span className="text-purple-400">const</span> <span className="text-blue-400">developer</span> <span className="text-slate-400">=</span> <span className="text-yellow-400">{`{`}</span>
-                  <br />
-                  &nbsp;&nbsp;<span className="text-sky-400">name</span>: <span className="text-green-400">"Rushikesh"</span>,
-                  <br />
-                  &nbsp;&nbsp;<span className="text-sky-400">role</span>: <span className="text-green-400">"Software Engineer"</span>,
-                  <br />
-                  &nbsp;&nbsp;<span className="text-sky-400">skills</span>: <span className="text-yellow-400">[</span>
-                  <span className="text-green-400">"React"</span>, <span className="text-green-400">"Next.js"</span><span className="text-yellow-400">]</span>,
-                  <br />
-                  &nbsp;&nbsp;<span className="text-sky-400">hardWorker</span>: <span className="text-red-400">true</span>,
-                  <br />
-                  &nbsp;&nbsp;<span className="text-sky-400">hireable</span>: <span className="text-purple-400">function</span><span className="text-yellow-400">()</span> <span className="text-yellow-400">{`{`}</span>
-                  <br />
-                  &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">return</span> <span className="text-red-400">true</span>;
-                  <br />
-                  &nbsp;&nbsp;<span className="text-yellow-400">{`}`}</span>
-                  <br />
-                  <span className="text-yellow-400">{`}`}</span>;
-                </div>
-                
-                {/* Simulated Cursor */}
-                <motion.div 
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                  className="w-2.5 h-4 bg-primary inline-block ml-1 align-middle mt-1"
-                />
+              <div className="p-6 overflow-hidden min-h-[220px]">
+                <TypewriterCode code={codeSnippet} speed={20} />
               </div>
 
               {/* Decorative Tech Icons Floating */}

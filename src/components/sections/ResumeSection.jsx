@@ -4,8 +4,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/button";
 import {Link} from "react-router-dom";
  
-const resumeLink = "/resume/LanAnh_Frontend_CV.pdf";
-const resumeFilename = "LanAnh_Frontend_CV.pdf";
+const resumeLink = "/resume/rushikeshChandavaleWeb.pdf";
+const resumeFilename = "rushikeshChandavaleWeb.pdf";
 
 
 export default function ResumeSection() {
@@ -74,14 +74,14 @@ export default function ResumeSection() {
             size="lg"
             className="bg-gray-700/80 border-gray-400 text-gray-200 hover:text-white hover:bg-gray-800/50 focus:ring-4 focus:outline-none focus:ring-gray-600 font-medium rounded-lg text-lg px-6 py-3 text-center"
           >
-            <Link
+            <a
               href={ resumeLink }
               download={ resumeFilename }
               className="inline-flex items-center justify-center"
             >
               <Download size={ 20 } className="mr-2" />
               Download CV (.pdf)
-            </Link>
+            </a>
           </Button>
         </motion.div>
       </div>

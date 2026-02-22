@@ -68,9 +68,10 @@ export default function ProjectCard({ project, index }) {
             <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-primary">
               {project.title}
             </h3>
-            <p className="text-slate-400 text-sm mb-3 line-clamp-3 grow">
-              {project.shortDescription}
-            </p>
+            <p 
+              className="text-slate-400 text-sm mb-3 line-clamp-3 grow"
+              dangerouslySetInnerHTML={{ __html: project.shortDescription }}
+            />
 
             <div className="flex flex-wrap text-xs text-slate-500 mb-3 gap-x-4 gap-y-1">
               <div className="flex items-center">

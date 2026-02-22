@@ -2,8 +2,9 @@
 
 import {Link} from "react-router-dom";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { Github, Linkedin, Mail, Instagram, Twitter } from "lucide-react";
 import { IoChevronUpCircleSharp } from "react-icons/io5";
+import { socialLinks } from "@/lib/data";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -88,15 +89,33 @@ export default function Footer() {
               Contact
             </h3>
             <ul className="space-y-2">
-              <li className="flex items-center text-gray-600 hover:text-blue-400 transition-colors">
-                <Mail className="h-4 w-4 mr-2" /> rushichandavale@gmail.com
-              </li>
-              <li className="flex items-center text-gray-600 hover:text-blue-400 transition-colors">
-                <Github className="h-4 w-4 mr-2" /> github.com/rushichandavale
-              </li>
-              <li className="flex items-center text-gray-600 hover:text-blue-400 transition-colors">
-                <Linkedin className="h-4 w-4 mr-2" /> linkedin.com/in/rushikesh-chandavale
-              </li>
+              {socialLinks.map((social, idx) => {
+                const Icon = {
+                  github: Github,
+                  linkedin: Linkedin,
+                  twitter: Twitter,
+                  instagram: Instagram,
+                  mail: Mail
+                }[social.platform.toLowerCase()];
+
+                if (!Icon) return null;
+
+                // Clean the URL to get a nice display text
+                const cleanUrl = social.url.replace(/\/$/, "");
+                const username = cleanUrl.split('/').pop();
+                const displayText = social.platform === 'mail' 
+                  ? social.url.replace('mailto:', '') 
+                  : `${social.platform}.com/${username}`;
+
+                return (
+                  <li key={idx} className="flex items-center text-slate-400 hover:text-blue-400 transition-colors py-1">
+                    <a href={social.url} target="_blank" rel="noopener noreferrer" className="flex items-center group">
+                      <Icon className="h-4 w-4 mr-3 text-slate-500 group-hover:text-blue-400" />
+                      <span className="text-sm font-medium">{displayText}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -131,33 +150,31 @@ export default function Footer() {
       </div>
 
       <div className="fixed bottom-20 right-4 z-40 flex flex-col space-y-2">
-        <a
-          href="https://github.com/rushichandavale"
-          rel="noopener noreferrer"
-          target="_blank"
-          className="p-2 bg-gray-800 rounded-full shadow-lg hover:bg-primary/30 transition-colors"
-          aria-label="Github Profile"
-        >
-          <Github className="h-5 w-5 text-gray-300" />
-        </a>
-        <a
-          href="https://linkedin.com/in/rushikesh-chandavale/"
-          rel="noopener noreferrer"
-          target="_blank"
-          className="p-2 bg-gray-800 rounded-full shadow-lg hover:bg-cyan-500/30 transition-colors"
-          aria-label="LinkedIn Profile"
-        >
-          <Linkedin className="h-5 w-5 text-gray-300" />
-        </a>
-        <a
-          href="mailto:rushichandavale@gmail.com"
-          rel="noopener noreferrer"
-          target="_blank"
-          className="p-2 bg-gray-800 rounded-full shadow-lg hover:bg-cyan-500/30 transition-colors"
-          aria-label="Send Email"
-        >
-          <Mail className="h-5 w-5 text-gray-300" />
-        </a>
+        {socialLinks.filter(s => ['github', 'linkedin', 'mail', 'twitter'].includes(s.platform)).map((social, idx) => {
+          const Icon = {
+            github: Github,
+            linkedin: Linkedin,
+            mail: Mail,
+            instagram: Instagram,
+            twitter: Twitter
+            
+          }[social.platform];
+
+          if (!Icon) return null;
+
+          return (
+            <a
+              key={idx}
+              href={social.url}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="p-2 bg-gray-800 rounded-full shadow-lg hover:bg-primary/30 transition-colors"
+              aria-label={`${social.name} Profile`}
+            >
+              <Icon className="h-5 w-5 text-gray-300" />
+            </a>
+          );
+        })}
       </div>
 
       {/* Scroll to Top Button */ }

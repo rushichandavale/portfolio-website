@@ -47,11 +47,8 @@ const skillCategories = [
     skills: [
       { name: "Node.js", icon: <FaNodeJs className="h-8 w-8 text-[#339933]" /> },
       { name: "Express.js", icon: <SiExpress className="h-8 w-8 text-slate-200" /> },
-      { name: "Python", icon: <FaPython className="h-8 w-8 text-[#3776AB]" /> },
-      { name: "Java", icon: <FaJava className="h-8 w-8 text-[#f89820]" /> },
       { name: "MongoDB", icon: <SiMongodb className="h-8 w-8 text-[#47A248]" /> },
       { name: "Prisma", icon: <SiPrisma className="h-8 w-8 text-teal-200" /> },
-      { name: "MariaDB", icon: <SiMariadb className="h-10 w-10 text-cyan-200" /> },
       { name: "MySQL", icon: <SiMysql className="h-10 w-10 text-[#06B6D4]" /> },
     ]
   },
@@ -61,8 +58,6 @@ const skillCategories = [
       { name: "Git", icon: <FaGitAlt className="h-8 w-8 text-[#F05032]" /> },
       { name: "RESTful APIs", icon: <TbApi className="h-10 w-10 text-blue-200" /> },
       { name: "Responsive Design", icon: <MdOutlineImportantDevices className="h-8 w-8 text-rose-400" /> },
-      { name: "Figma", icon: <FaFigma className="h-8 w-8 text-[#F24E1E]" /> },
-      { name: "Docker", icon: <FaDocker className="h-8 w-8 text-sky-400" /> },
     ]
   }
 ];
