@@ -21,8 +21,8 @@ const Home = () => {
       <ExperiencesSection/>
       <ProjectsSection/>
       <SkillsSection/>
-      <TestimonialsSection/>
-      <FAQSection/>
+      {/* <TestimonialsSection/> */}
+      {/* <FAQSection/> */}
       <ResumeSection/>
       <ContactSection/>
     </div>
