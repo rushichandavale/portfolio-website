@@ -1,22 +1,22 @@
 import { Images } from "./images";
 
 export const projectsData = [
-  {
-    id: "1",
-    title: "Portfolio Website",
-    slug: "portfolio",
-    shortDescription: "A personal portfolio website built with React, Tailwind CSS, and Framer Motion.",
-    description: "A personal portfolio website built with React, Tailwind CSS, and Framer Motion. It features a modern and responsive design, with smooth animations and a dark mode option.",
-    imageUrl: Images.portfolio, // Using generic thumbnail as placeholder
-    githubUrl: "https://github.com/rushichandavale/portfolio-website",
-    tools: ["React", "Tailwind CSS", "Framer Motion", "Git", "GitHub", "Vercel"],
-    category: "Web",
-    projectStartDate: new Date("2024-01-01"),
-    projectStatus: "Completed",
-    liveDemoUrl: "https://rushi-personal-portfolio.vercel.app/",
-    keyFeatures: ["Responsive design", "Customizable theme", "Dark/Light mode", "Progress visualization"],
-    galleryImages: [Images.portfolio]
-  },
+  // {
+  //   id: "1",
+  //   title: "Portfolio Website",
+  //   slug: "portfolio",
+  //   shortDescription: "A personal portfolio website built with React, Tailwind CSS, and Framer Motion.",
+  //   description: "A personal portfolio website built with React, Tailwind CSS, and Framer Motion. It features a modern and responsive design, with smooth animations and a dark mode option.",
+  //   imageUrl: Images.portfolio, // Using generic thumbnail as placeholder
+  //   githubUrl: "https://github.com/rushichandavale/portfolio-website",
+  //   tools: ["React", "Tailwind CSS", "Framer Motion", "Git", "GitHub", "Vercel"],
+  //   category: "Web",
+  //   projectStartDate: new Date("2024-01-01"),
+  //   projectStatus: "Completed",
+  //   liveDemoUrl: "https://rushi-personal-portfolio.vercel.app/",
+  //   keyFeatures: ["Responsive design", "Customizable theme", "Dark/Light mode", "Progress visualization"],
+  //   galleryImages: [Images.portfolio]
+  // },
   {
     id: "2",
     title: "Flight Explorer Web App",
